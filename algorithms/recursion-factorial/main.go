@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(findFactorialRecursive(4))
-	fmt.Println(findFactorialIterative(4))
+	fmt.Println(findFactorialRecursive(5))
+	fmt.Println(findFactorialIterative(5))
 }
 
 func findFactorialRecursive(n int) int {
