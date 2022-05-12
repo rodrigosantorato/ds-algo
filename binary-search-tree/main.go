@@ -16,7 +16,7 @@ type Tree struct {
 }
 
 func main() {
-	tree := CreateTree()
+	tree := CreateTree(9)
 
 	tree.insert(Node{value: 4})
 	tree.insert(Node{value: 20})
@@ -24,11 +24,13 @@ func main() {
 	tree.insert(Node{value: 15})
 	tree.insert(Node{value: 1})
 	tree.insert(Node{value: 6})
-	fmt.Println(tree.lookup(6))
-	fmt.Println(tree.lookup(170))
-	fmt.Println(tree.lookup(1))
-	fmt.Println(tree.lookup(4))
-	fmt.Println(tree.lookup(190))
+	//fmt.Println(tree.lookup(6))
+	//fmt.Println(tree.lookup(170))
+	//fmt.Println(tree.lookup(1))
+	//fmt.Println(tree.lookup(4))
+	//fmt.Println(tree.lookup(190))
+	//fmt.Println(tree.breadthFirstSearch())
+	fmt.Println(tree.DFSInOrder(tree.root, &[]int{}))
 
 	//fmt.Println(tree.PreOrderTraverse())
 
@@ -43,9 +45,9 @@ func main() {
 	//fmt.Printf("%+v\n", tree)
 }
 
-func CreateTree() *Tree {
+func CreateTree(rootValue int) *Tree {
 	var root Node
-	root.value = 9
+	root.value = rootValue
 
 	tree := new(Tree)
 	tree.root = &root
@@ -104,18 +106,47 @@ func (tree *Tree) lookup(value int) *Node {
 	return nil
 }
 
-func (tree *Tree) PreOrderTraverse() (values []int) {
-	return tree.root.PreOrderTraverse()
+func (tree *Tree) breadthFirstSearch() []int {
+	currentNode := tree.root
+	var arr []int
+	queue := []*Node{currentNode}
+
+	for len(queue) > 0 {
+		currentNode, queue = queue[0], queue[1:]
+		arr = append(arr, currentNode.value)
+		if currentNode.left != nil {
+			queue = append(queue, currentNode.left)
+		}
+		if currentNode.right != nil {
+			queue = append(queue, currentNode.right)
+		}
+	}
+	return arr
 }
 
-func (node *Node) PreOrderTraverse() (values []int) {
-	currentNode := node
-	values = append(values, currentNode.value)
-	if currentNode.left != nil {
-		values = append(values, currentNode.left.PreOrderTraverse()...)
+func (tree *Tree) DFSInOrder(node *Node, arr *[]int) []int {
+	if node.left != nil {
+		tree.DFSInOrder(node.left, arr)
 	}
-	if currentNode.right != nil {
-		values = append(values, currentNode.right.PreOrderTraverse()...)
+	*arr = append(*arr, node.value)
+	if node.right != nil {
+		tree.DFSInOrder(node.right, arr)
 	}
-	return
+	return *arr
 }
+
+//func (tree *Tree) PreOrderTraverse() (values []int) {
+//	return tree.root.PreOrderTraverse()
+//}
+//
+//func (node *Node) PreOrderTraverse() (values []int) {
+//	currentNode := node
+//	values = append(values, currentNode.value)
+//	if currentNode.left != nil {
+//		values = append(values, currentNode.left.PreOrderTraverse()...)
+//	}
+//	if currentNode.right != nil {
+//		values = append(values, currentNode.right.PreOrderTraverse()...)
+//	}
+//	return
+//}

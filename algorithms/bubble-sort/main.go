@@ -4,7 +4,6 @@ import "fmt"
 
 func main() {
 	arr := []int{9, 4, 6, 99, 42, 965, 2, 7, 4, 1, 14, 17, 54, 87}
-
 	fmt.Println(bubbleSort(arr))
 }
 
