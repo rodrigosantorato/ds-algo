@@ -28,10 +28,10 @@ func reverseString(myString string) string {
 // 	arrayOfCharacters := strings.Split(myString, "")
 // 	arrayLength := len(arrayOfCharacters)
 // 	var reversedCharactersArray []string
-// 
+//
 // 	for i := 0; i < arrayLength; i++ {
 // 		reversedCharactersArray = append(reversedCharactersArray, arrayOfCharacters[arrayLength-1-i])
 // 	}
-// 
+//
 // 	return strings.Join(reversedCharactersArray, "")
 // }
