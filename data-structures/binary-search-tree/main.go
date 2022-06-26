@@ -31,6 +31,8 @@ func main() {
 	//fmt.Println(tree.lookup(190))
 	//fmt.Println(tree.breadthFirstSearch())
 	fmt.Println(tree.DFSInOrder(tree.root, &[]int{}))
+	fmt.Println(tree.DFSPreOrder(tree.root, &[]int{}))
+	fmt.Println(tree.DFSPostOrder(tree.root, &[]int{}))
 
 	//fmt.Println(tree.PreOrderTraverse())
 
@@ -132,6 +134,28 @@ func (tree *Tree) DFSInOrder(node *Node, arr *[]int) []int {
 	if node.right != nil {
 		tree.DFSInOrder(node.right, arr)
 	}
+	return *arr
+}
+
+func (tree *Tree) DFSPreOrder(node *Node, arr *[]int) []int {
+	*arr = append(*arr, node.value)
+	if node.left != nil {
+		tree.DFSPreOrder(node.left, arr)
+	}
+	if node.right != nil {
+		tree.DFSPreOrder(node.right, arr)
+	}
+	return *arr
+}
+
+func (tree *Tree) DFSPostOrder(node *Node, arr *[]int) []int {
+	if node.left != nil {
+		tree.DFSPostOrder(node.left, arr)
+	}
+	if node.right != nil {
+		tree.DFSPostOrder(node.right, arr)
+	}
+	*arr = append(*arr, node.value)
 	return *arr
 }
 
