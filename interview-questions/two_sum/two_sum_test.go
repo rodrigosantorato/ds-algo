@@ -8,15 +8,17 @@ import (
 // Find the two numbers that sum to the target and return their indexes
 // [1, 2, 3, 4, 5]  target = 9   result = [3,4]
 
-type Test struct {
+type testCase struct {
 	name     string
 	input    []int
 	target   int
 	expected []int
 }
 
-func TestTwoSum(t *testing.T) {
-	tests := []Test{
+func TestFindTwoSum(t *testing.T) {
+	impls := []func([]int, int) []int{findTwoSumBruteForce, findTwoSumHashMap}
+
+	tests := []testCase{
 		{
 			name:     "happy ending",
 			input:    []int{1, 2, 3, 4, 5},
@@ -51,10 +53,12 @@ func TestTwoSum(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			res := twoSum(tt.input, tt.target)
+			for i, impl := range impls {
+				res := impl(tt.input, tt.target)
 
-			if !slices.Equal(tt.expected, res) {
-				t.Errorf("%v failed. expected was : %v but instead got %v\n", tt.name, tt.expected, res)
+				if !slices.Equal(tt.expected, res) {
+					t.Errorf("%v failed with impl i: %v. expected was: %v but instead got %v\n", tt.name, i, tt.expected, res)
+				}
 			}
 		})
 	}
