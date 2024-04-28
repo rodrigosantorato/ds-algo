@@ -13,11 +13,13 @@ input: [9,1,2,3,4,7] res: 35
 **/
 
 func main() {
-	fmt.Println(findAreaOfBiggestContainer([]int{9, 1, 2, 3, 4, 7}))
-	fmt.Println(findAreaOfBiggestContainer([]int{9, 30, 2, 3, 50, 7}))
+	fmt.Println(findAreaOfBiggestContainerBruteForce([]int{9, 1, 2, 3, 4, 7}))
+	fmt.Println(findAreaOfBiggestContainerBruteForce([]int{9, 30, 2, 3, 50, 7}))
+	fmt.Println(findAreaOfBiggestContainerShiftingPointers([]int{9, 1, 2, 3, 4, 7}))
+	fmt.Println(findAreaOfBiggestContainerShiftingPointers([]int{9, 30, 2, 3, 50, 7}))
 }
 
-func findAreaOfBiggestContainer(nums []int) int {
+func findAreaOfBiggestContainerBruteForce(nums []int) int {
 	// compare pairs of numbers and check their area as containers
 	// get note of the max area and return after all the comparisons
 	maxArea := 0
@@ -34,5 +36,25 @@ func findAreaOfBiggestContainer(nums []int) int {
 		} // checked every single comparison for index i
 	}
 
+	return maxArea
+}
+
+func findAreaOfBiggestContainerShiftingPointers(nums []int) int {
+	maxArea := 0
+	i, j := 0, len(nums)-1
+
+	for i < j {
+		// calc the area check if it's bigger than max and move pointers
+		area := min(nums[i], nums[j]) * (j - i)
+		if area > maxArea {
+			maxArea = area
+		}
+
+		if nums[i] < nums[j] {
+			i++
+		} else {
+			j--
+		}
+	}
 	return maxArea
 }

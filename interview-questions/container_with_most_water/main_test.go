@@ -47,7 +47,7 @@ func TestFindAreaOfBiggestContainer(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		res := findAreaOfBiggestContainer(test.input)
+		res := findAreaOfBiggestContainerBruteForce(test.input)
 		if res != test.expected {
 			t.Errorf("%v failed with. Expected %v but got %v instead", test.name, test.expected, res)
 		}
