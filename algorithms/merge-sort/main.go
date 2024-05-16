@@ -15,25 +15,21 @@ func mergeSort(arr []int) []int {
 
 	mid := len(arr) / 2
 
-	left := arr[:mid]
-	right := arr[mid:]
-
-	return merge(mergeSort(left), mergeSort(right))
+	return merge(mergeSort(arr[:mid]), mergeSort(arr[mid:]))
 }
 
-func merge(left []int, right []int) []int {
-	var leftIndex, rightIndex int
-	var mergedArray []int
+func merge(left, right []int) []int {
+	var merged []int
+	leftIndex, rightIndex := 0, 0
 
 	for leftIndex < len(left) || rightIndex < len(right) {
-		if leftIndex < len(left) && (rightIndex == len(right) || left[leftIndex] < right[rightIndex]) {
-			mergedArray = append(mergedArray, left[leftIndex])
+		if leftIndex < len(left) && rightIndex == len(right) || leftIndex < len(left) && left[leftIndex] < right[rightIndex] {
+			merged = append(merged, left[leftIndex])
 			leftIndex++
-			continue
+		} else {
+			merged = append(merged, right[rightIndex])
+			rightIndex++
 		}
-		mergedArray = append(mergedArray, right[rightIndex])
-		rightIndex++
-		continue
 	}
-	return mergedArray
+	return merged
 }
